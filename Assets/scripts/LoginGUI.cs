@@ -45,8 +45,9 @@ public class LoginGUI : MonoBehaviour {
         int port = 33001;
 		pc = new PomeloClient();
         pc.initClient(host, port);
-        Debug.Log("Connecting to: " + host + port);
+        Debug.Log("Connecting to gate server: " + host + ":" + port);
 		pc.connect(null, (data)=>{
+            Debug.Log("pc.connect callback.");
 			JsonObject msg = new JsonObject();
 			msg["uid"] = userName;
 			pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
@@ -59,12 +60,17 @@ public class LoginGUI : MonoBehaviour {
 			
 			string host = (string)result["host"];
 			int port = Convert.ToInt32(result["port"]);
+
+
+            Debug.Log("Connecting to connector server: " + host + ":" + port);
 			pc = new PomeloClient();
             pc.initClient(host, port);
 			pc.connect(null, (data)=>{
 				Entry();
 			});	
-		}
+        } else {
+            Debug.Log("Connection error.");
+        }
 	}
 	
 	//Entry chat application.
