@@ -1,15 +1,46 @@
-pomelo-unitychat-socket
-================
-This is a chat application using [pomelo-unityclient-socket](https://github.com/NetEase/pomelo-unityclient-socket?source=cr) for pomelo,
-the server side is chatofpomelo(https://github.com/NetEase/chatofpomelo).
+# pomelo-chat-unity-socket
 
-##License
-(The MIT License)
+适用于 Pomelo 聊天服务器教程的 Unity 版客户端。使用原生 socket。
 
-Copyright (c) 2012-2013 NetEase, Inc. and other contributors
+本项目参照了官方的 [NetEase/pomelo-unitychat-socket](https://github.com/NetEase/pomelo-unitychat-socket)，因为其最后更新时间（20180314 17:15检查）是2013.4.22，已经不再适用当前的 unity 版本，与 pomelo 官方 sdk 也不兼容了。所以进行更新。
 
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the 'Software'), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+# 界面预览
 
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+## 登录界面
+![](imgs/login-screen-1.png)
 
-THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+## 聊天界面
+![](imgs/chat-screen-1.png)
+![](imgs/chat-screen-2.png)
+
+
+
+# 依赖
+
+本项目是客户端，使用官方的 unity 插件 [NetEase/pomelo-unityclient-socket](https://github.com/NetEase/pomelo-unityclient-socket) 。服务器端参考官方示例 [NetEase/chatofpomelo](https://github.com/NetEase/chatofpomelo)制作了 docker 封装环境后的版本 [Pomelo-chat](https://github.com/HustLion/pomelo-chat)。
+
+Unity 版本为 `2017.2.0f3.`
+
+# 运行
+
+用 Unity 打开 Assets/scenes/login，点击运行按钮即可。
+
+# 主要修改点
+
+
+* PomeloClient 的 API 调用方式修改为最新。
+* LoginGUI 跳转下一场景的逻辑修改，之前不在 Update() 中，直接出错（`INTERNAL_CALL_GetActiveScene can only be called from the main thread.`）
+* 将无法使用的 pomelo-dotnetClient.dll 插件换成官方最新源码。
+* 移除一些丢失的依赖。
+* 增加 .gitignore
+* ChatGUI 的界面颜色，之前的背景和文字的颜色几乎相同。
+* 增加、合并 LICENSE 信息
+
+# TODO
+
+* [] 将源码编译成 dll，如果有问题，进行一些修改 https://github.com/HustLion/pomelo-unityclient-socket
+
+
+
+
+
