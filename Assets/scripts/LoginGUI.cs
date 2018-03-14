@@ -15,6 +15,7 @@ public class LoginGUI : MonoBehaviour {
 	public Texture2D pomelo;
 	public GUISkin pomeloSkin; 
 	public GUIStyle pomeloStyle;
+    bool toNextScene = false;
 	
  	void Start() 
     {	
@@ -30,6 +31,9 @@ public class LoginGUI : MonoBehaviour {
 			}
 			Application.Quit();
 		}
+        if (toNextScene) {
+            Application.LoadLevel(Application.loadedLevel + 1);
+        }
 	}
 	
 	//When quit, release resource
@@ -102,7 +106,7 @@ public class LoginGUI : MonoBehaviour {
 		if (pc != null) {
 			pc.request("connector.entryHandler.enter", userMessage, (data)=>{
 				users = data;
-				Application.LoadLevel(Application.loadedLevel + 1);
+                toNextScene = true;
 			});
 		}
 	}
