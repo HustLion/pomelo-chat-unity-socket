@@ -42,9 +42,10 @@ public class LoginGUI : MonoBehaviour {
 	//Login the chat application and new PomeloClient.
 	void Login() {
 		string host = "127.0.0.1";
-		int port = 3014;
+        int port = 33001;
 		pc = new PomeloClient();
         pc.initClient(host, port);
+        Debug.Log("Connecting to: " + host + port);
 		pc.connect(null, (data)=>{
 			JsonObject msg = new JsonObject();
 			msg["uid"] = userName;
