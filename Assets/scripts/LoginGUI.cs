@@ -43,7 +43,8 @@ public class LoginGUI : MonoBehaviour {
 	void Login() {
 		string host = "127.0.0.1";
 		int port = 3014;
-		pc = new PomeloClient(host, port);
+		pc = new PomeloClient();
+        pc.initClient(host, port);
 		pc.connect(null, (data)=>{
 			JsonObject msg = new JsonObject();
 			msg["uid"] = userName;
@@ -57,7 +58,8 @@ public class LoginGUI : MonoBehaviour {
 			
 			string host = (string)result["host"];
 			int port = Convert.ToInt32(result["port"]);
-			pc = new PomeloClient(host, port);
+			pc = new PomeloClient();
+            pc.initClient(host, port);
 			pc.connect(null, (data)=>{
 				Entry();
 			});	
