@@ -44,14 +44,24 @@ public class LoginGUI : MonoBehaviour {
 		string host = "127.0.0.1";
         int port = 33001;
 		pc = new PomeloClient();
-        pc.initClient(host, port);
+        pc.NetWorkStateChangedEvent += (state) =>
+        {
+            Debug.Log("NetWorkStateChangedEvent: " + state);
+        };
         Debug.Log("Connecting to gate server: " + host + ":" + port);
-		pc.connect(null, (data)=>{
+        pc.initClient(host, port, () => {
             Debug.Log("pc.connect callback.");
-			JsonObject msg = new JsonObject();
-			msg["uid"] = userName;
-			pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
-		});
+            JsonObject msg = new JsonObject();
+            msg["uid"] = userName;
+            pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
+        });
+
+		//pc.connect(null, (data)=>{
+  //          Debug.Log("pc.connect callback.");
+		//	JsonObject msg = new JsonObject();
+		//	msg["uid"] = userName;
+		//	pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
+		//});
 	}
 	
 	void OnQuery(JsonObject result){
@@ -99,6 +109,7 @@ public class LoginGUI : MonoBehaviour {
 		
 		if (GUI.Button(new Rect(410, 350, 70, 20), "OK")) {
 			if (pc == null) {
+                Debug.Log("Login button clicked!");
 				Login();
 			}
 		}	
