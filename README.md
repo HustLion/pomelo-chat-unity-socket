@@ -40,7 +40,10 @@ Unity 版本为 `2017.2.0f3.`
 
 * [] 将源码编译成 dll，如果有问题，进行一些修改 https://github.com/HustLion/pomelo-unityclient-socket
 
+# 参考资料
 
+* [Pomelo+unity3d采坑日志](http://blog.csdn.net/qq_32725345/article/details/60467499) 文章中提到的点都是重点，避开了好多坑。
+* [pomelo踩坑记](http://blog.csdn.net/comhaqs/article/details/70790104)
 
 
 
