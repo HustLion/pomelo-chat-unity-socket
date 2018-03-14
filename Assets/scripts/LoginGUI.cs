@@ -42,29 +42,37 @@ public class LoginGUI : MonoBehaviour {
 	//Login the chat application and new PomeloClient.
 	void Login() {
 		string host = "127.0.0.1";
-        int port = 33001;
+        int port = 33014;
 		pc = new PomeloClient();
+
         pc.NetWorkStateChangedEvent += (state) =>
         {
             Debug.Log("NetWorkStateChangedEvent: " + state);
         };
+
         Debug.Log("Connecting to gate server: " + host + ":" + port);
+
         pc.initClient(host, port, () => {
-            Debug.Log("pc.connect callback.");
-            JsonObject msg = new JsonObject();
-            msg["uid"] = userName;
-            pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
+            Debug.Log("pc.initClient callback.");
+
+
+            pc.connect((data)=> {
+                Debug.Log("pc.connect callback.");
+                JsonObject msg = new JsonObject();
+                msg["uid"] = userName;
+                pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
+                //pc.request("gate.gateHandler.queryEntry", msg, (response) => {
+                //    Debug.Log("callback here!");
+                //});
+            });
+
         });
 
-		//pc.connect(null, (data)=>{
-  //          Debug.Log("pc.connect callback.");
-		//	JsonObject msg = new JsonObject();
-		//	msg["uid"] = userName;
-		//	pc.request("gate.gateHandler.queryEntry", msg, OnQuery);
-		//});
+
 	}
 	
 	void OnQuery(JsonObject result){
+        Debug.Log("OnQuery called. Acquired data from gate server.");
 		if(Convert.ToInt32(result["code"]) == 200){
 			pc.disconnect();
 			
@@ -74,10 +82,13 @@ public class LoginGUI : MonoBehaviour {
 
             Debug.Log("Connecting to connector server: " + host + ":" + port);
 			pc = new PomeloClient();
-            pc.initClient(host, port);
-			pc.connect(null, (data)=>{
-				Entry();
-			});	
+            pc.initClient(host, port, () => {
+                pc.connect((data) =>
+                {
+                    Entry();
+                });
+
+            });
         } else {
             Debug.Log("Connection error.");
         }
